@@ -1,0 +1,33 @@
+#nav-div {
+    max-width: 500px;
+}
+
+#content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.edit-form {
+    /*width: 300px;*/
+}
+
+.btn-save {
+    width: 100px;
+}
+
+.item-list-div {
+    margin: 3px;
+}
+
+.item-list-div:nth-child(odd) {
+    background-color: #f5f5f5;
+}
+
+.item-list-div > * {
+    display: inline-block;
+}
+
+.item-list-cover {
+    max-width: 54px;
+    max-height: 75px;
+}

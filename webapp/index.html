@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <title>My AngularJS App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/app.css"/>
+</head>
+<body>
+<script type="text/ng-template" id="views/item_add.html">
+    <div class="edit-form">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Type</label>
+
+                <div class="col-sm-8">
+                    <p class="form-control-static">{{item.type}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Title</label>
+
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="title of {{item.type}}" ng-model="item.title">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Search Sites</label>
+
+                <div class="col-sm-6">
+                    <label class="checkbox-inline" ng-repeat="s in searchs">
+                        <input type="checkbox" value="{{s.surl}}" class="input-search" checked="checked"> {{s.name}}
+                    </label>
+
+                </div>
+                <div class="col-sm-2">
+                    <span class="btn btn-default btn-sm" ng-click="search()">Search</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Url</label>
+
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="url for item" ng-model="item.url">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="fetch(item.url)" id="btn-add-fetch">
+                            Fetch
+                        </button>
+                    </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Author</label>
+
+                <div class="col-sm-8">
+                    <p class="form-control-static">{{item.author}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Img</label>
+
+                <div class="col-sm-8">
+                    <img class="form-control-static" ng-src="{{item.img}}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Score</label>
+
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="item.score">
+                        <option value="0">Select</option>
+                        <option value="10">(10) Masterpiece</option>
+                        <option value="9">(9) Great</option>
+                        <option value="8">(8) Very Good</option>
+                        <option value="7">(7) Good</option>
+                        <option value="6">(6) Fine</option>
+                        <option value="5">(5) Average</option>
+                        <option value="4">(4) Bad</option>
+                        <option value="3">(3) Very Bad</option>
+                        <option value="2">(2) Horrible</option>
+                        <option value="1">(1) Appalling</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Tags</label>
+
+                <div class="col-sm-8">
+                    <ul id="form-add-tags" class="nav nav-pills">
+                        <li ng-repeat="t in tags" ng-click="setTag($index)" id="tag-{{t.tid}}"
+                            ng-class="t.selected?'active':''"><a>{{t.name}}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
+                    <button type="submit" class="btn btn-primary btn-save" ng-click="save()"
+                            ng-disabled="item.author?false:true">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+
+<script type="text/ng-template" id="views/item_all.html">
+    <div>
+        <div ng-repeat="item in items" class="item-list-div">
+            <img ng-src="{{item.img}}" class="item-list-cover">
+
+            <div class="item-list-info">
+                <div class="item-list-title">{{item.title}}</div>
+                <div class="item=list-author">{{item.author}}</div>
+            </div>
+            <div class="item-list-type">{{item.type}}</div>
+            <div>
+                <a ng-href="{{item.url}}">link</a>
+            </div>
+        </div>
+    </div>
+</script>
+<div id="nav-div">
+    <ul class="nav nav-pills nav-justified">
+        <li><a href="#/item/all">Home</a></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+                Add Item <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#/item/add/anime">Add Anime</a></li>
+                <li><a href="#/item/add/manga">Add Manga</a></li>
+            </ul>
+        </li>
+
+        <li><a href="#">Messages</a></li>
+    </ul>
+</div>
+
+<div id="content" ng-view></div>
+<script>
+    var apiHost = "http://localhost:8000/";
+</script>
+<script src="js/jquery-1.11.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular-1.2.16/angular.js"></script>
+<script src="js/angular-1.2.16/angular-route.js"></script>
+<script src="js/angular-1.2.16/angular-resource.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/directives.js"></script>
+</body>
+</html>
