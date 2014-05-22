@@ -19,9 +19,11 @@ angular.module('myApp.services', [])
                 res(apiHost + 'tag/all')
                     .query({}, function (data) {
                         tags = data;
-                        defer.resolve(tags);
+                        defer.resolve(angular.copy(tags));
                     });
-            } else defer.resolve(tags);
+            } else {
+                defer.resolve(angular.copy(tags));
+            }
             return defer.promise;
         }
 

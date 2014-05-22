@@ -9,12 +9,8 @@ angular.module('myApp.controllers', [])
 
         });
         $scope.itemUpdate = function (index) {
-            var id = $scope.items[index].id;
-            var score = $scope.items[index].score;
-            itemFac.update.get({id: id, score: score}, function (data) {
-                if (data.err_code == 0) {
-                    $scope.items[index].score = data.item.score;
-                }
+            itemFac.update.save($scope.items[index], function (data) {
+                $scope.items[index] = data;
             });
         }
         $scope.itemDel = function (index) {
@@ -64,15 +60,13 @@ angular.module('myApp.controllers', [])
             $scope.tags = ts;
         });
 
-        $scope.setTag = function (index) {
-            var tag = $scope.tags[index];
+        $scope.setTag = function (tag) {
             if (tag.selected) {
+                $scope.item.tags.push(tag.tid);
+
+            } else {
                 var i = $scope.item.tags.indexOf(tag.tid);
                 if (i > -1) $scope.item.tags.splice(i, 1);
-                tag.selected = false;
-            } else {
-                $scope.item.tags.push(tag.tid);
-                tag.selected = true;
             }
         }
         $scope.save = function () {

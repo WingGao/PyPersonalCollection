@@ -20,8 +20,11 @@ def fetch(request):
 
 
 def get_jbook(url):
-    html = urllib2.urlopen(url).read()
-    author = re.findall('<a class="prodauthor".*?>(.*?)</a>', html)[0].split("著")[0]
+    opener = urllib2.build_opener()
+    opener.addheaders.append(('Cookie', 'SSCTRLJBOOK=R18=yes'))
+    html = opener.open(url).read()
+    author = re.findall('<a class="prodauthor".*?>(.*?)</a>', html)[0]
+    author = author.split("著")[0]
     author = author.decode('utf-8').replace(u'\u3000', ' ').strip()
     img = re.findall('<img src="(.*?)" class="prodimage"', html)[0]
     f = FetchItem()

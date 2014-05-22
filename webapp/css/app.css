@@ -22,7 +22,7 @@
 
 .item-list-text {
     line-height: 50px !important;
-    display: inline-block !important;
+    display: inline-block;
 }
 
 .item-list-div:nth-child(odd) {
@@ -45,4 +45,14 @@
 
 .item-list-info {
 
+}
+
+.item-list-tag {
+    color: #c7254e;
+    background-color: #f9f2f4;
+    white-space: nowrap;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 3px;
+    margin-right: 5px;
 }

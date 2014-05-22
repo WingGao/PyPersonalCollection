@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from ..models import *
-import json
+import json,time
 
 
 def get_tags(request):

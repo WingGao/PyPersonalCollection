@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render_to_response
 from django.core import serializers
 from ..models import *
@@ -39,11 +39,11 @@ def delete(request):
 
 
 def update(request):
-    if 'id' in request.GET:
-        get = request.GET
-        item = CItem.objects.get(id=get['id'])
-        if 'score' in get:
-            item.score = get['score']
+    if request.method == 'POST':
+        post = json.loads(request.body)
+        item = CItem.objects.get(id=post['id'])
+        item.score = post['score']
+        item.tags = get_tags_by_id(post.get('tags', []))
         item.save()
-        return HttpResponse(json.dumps({'err_code': 0, 'item': item.to_dict()}))
-    return HttpResponse(json.dumps({'err_code': 1}))
+        return HttpResponse(json.dumps(item.to_dict()))
+    return HttpResponseForbidden()
