@@ -1,0 +1,1 @@
+C:\Python27\python.exe D:/GitHub/PyPersonalCollection/manage.py runserver 8000

@@ -28,3 +28,22 @@ def add(request):
         item.save()
         item.tags = get_tags_by_id(post.get('tags', []))
     return HttpResponse(item)
+
+
+def delete(request):
+    if 'id' in request.GET:
+        item = CItem.objects.get(id=request.GET['id'])
+        item.delete()
+        return HttpResponse(json.dumps({'err_code': 0}))
+    return HttpResponse(json.dumps({'err_code': 1}))
+
+
+def update(request):
+    if 'id' in request.GET:
+        get = request.GET
+        item = CItem.objects.get(id=get['id'])
+        if 'score' in get:
+            item.score = get['score']
+        item.save()
+        return HttpResponse(json.dumps({'err_code': 0, 'item': item.to_dict()}))
+    return HttpResponse(json.dumps({'err_code': 1}))

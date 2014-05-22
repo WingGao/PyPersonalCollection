@@ -3,8 +3,15 @@
 /* Filters */
 
 angular.module('myApp.filters', []).
-  filter('interpolate', ['version', function(version) {
-    return function(text) {
-      return String(text).replace(/\%VERSION\%/mg, version);
-    };
-  }]);
+    filter('formatTag', ['tag', function (tags) {
+        var ts;
+        if (!ts) tags.all().then(function (data) {
+            ts = data;
+        });
+        return function (tid) {
+            for (var i = 0; i < ts.length; i++) {
+                if (ts[i].tid == tid)
+                    return ts[i].name;
+            }
+        };
+    }]);

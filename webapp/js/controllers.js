@@ -6,17 +6,39 @@ angular.module('myApp.controllers', [])
     .controller('ItemAllCtrl', ['$scope', '$routeParams', 'item', 'tag', function ($scope, $routeParams, itemFac, tags) {
         itemFac.all.query({}, function (data) {
             $scope.items = data;
+
+        });
+        $scope.itemUpdate = function (index) {
+            var id = $scope.items[index].id;
+            var score = $scope.items[index].score;
+            itemFac.update.get({id: id, score: score}, function (data) {
+                if (data.err_code == 0) {
+                    $scope.items[index].score = data.item.score;
+                }
+            });
+        }
+        $scope.itemDel = function (index) {
+            var id = $scope.items[index].id;
+            itemFac.delete.get({id: id}, function (data) {
+                if (data.err_code == 0) {
+                    $scope.items.splice(index, 1);
+                    $scope.$apply();
+                }
+            });
+        }
+
+        tags.all().then(function (ts) {
+            $scope.tags = ts;
         });
     }])
-    .controller('ItemAddCtrl', ['$scope', '$routeParams', 'item', 'tag', function ($scope, $routeParams, itemFac, tags) {
+    .controller('ItemAddCtrl', ['$scope', '$routeParams', '$location', 'item', 'tag', function ($scope, $routeParams, $location, itemFac, tags) {
         var sites = {
             manga: [
                 {name: 'jbook', surl: 'https://www.google.com.hk/search?newwindow=1&q=%s+site%3Awww.jbook.co.jp'},
                 {name: 'MyAnimeList', surl: 'https://www.google.com.hk/search?newwindow=1&q=%s+site%3Amyanimelist.net/manga'}
             ]
         };
-        $scope.item = {};
-        $scope.item.type = $routeParams.type;
+        $scope.item = {type: $routeParams.type, tags: [], score: 0};
         $scope.searchs = sites[ $routeParams.type];
         $scope.search = function () {
             var csites = $('.input-search:checked');
@@ -41,7 +63,7 @@ angular.module('myApp.controllers', [])
         tags.all().then(function (ts) {
             $scope.tags = ts;
         });
-        $scope.item.tags = [];
+
         $scope.setTag = function (index) {
             var tag = $scope.tags[index];
             if (tag.selected) {
@@ -55,7 +77,7 @@ angular.module('myApp.controllers', [])
         }
         $scope.save = function () {
             itemFac.create.save($scope.item, function (data) {
-                console.log(data);
+                $location.path('/item/all');
             });
 
         }

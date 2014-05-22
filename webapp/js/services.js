@@ -35,6 +35,8 @@ angular.module('myApp.services', [])
 
         return {
             create: res(apiHost + "item/add"),
+            delete: res(apiHost + "item/delete"),
+            update: res(apiHost + "item/update"),
             all: res(apiHost + "item/all")
         }
     }]);

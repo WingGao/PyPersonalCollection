@@ -111,16 +111,48 @@
 
 <script type="text/ng-template" id="views/item_all.html">
     <div>
-        <div ng-repeat="item in items" class="item-list-div">
-            <img ng-src="{{item.img}}" class="item-list-cover">
+        <div id="item-list-head" class="row">
+            <span class="col-sm-2">Count: {{items.length}}</span>
+            <span class="col-sm-2">password: <code>ppc$all</code></span>
+        </div>
+        <div ng-repeat="item in items" class="item-list-div row"
+             ng-mouseenter="hover = true"
+             ng-mouseleave="hover = false">
+            <img ng-src="{{item.img}}" class="item-list-cover col-sm-1">
 
-            <div class="item-list-info">
+            <div class="item-list-info col-sm-3">
                 <div class="item-list-title">{{item.title}}</div>
-                <div class="item=list-author">{{item.author}}</div>
+                <div class="item-list-author">{{item.author}}</div>
             </div>
-            <div class="item-list-type">{{item.type}}</div>
-            <div>
-                <a ng-href="{{item.url}}">link</a>
+            <div class="item-list-type col-sm-2">
+                {{item.type}}_{{item.id}}<br>
+                <a ng-href="{{item.url}}" target="_blank">link</a>
+            </div>
+            <div class="col-sm-2 item-list-text">
+                <select class="form-control input-sm item-list-text" ng-model="item.score">
+                    <option value="0">Select</option>
+                    <option value="10">(10) Masterpiece</option>
+                    <option value="9">(9) Great</option>
+                    <option value="8">(8) Very Good</option>
+                    <option value="7">(7) Good</option>
+                    <option value="6">(6) Fine</option>
+                    <option value="5">(5) Average</option>
+                    <option value="4">(4) Bad</option>
+                    <option value="3">(3) Very Bad</option>
+                    <option value="2">(2) Horrible</option>
+                    <option value="1">(1) Appalling</option>
+                </select>
+            </div>
+            <div class="col-sm-2 item-list-text">
+                <div ng-repeat="t in item.tags">{{t|formatTag}}</div>
+            </div>
+            <div class="col-sm-2 item-list-text">
+                <a class="btn btn-primary btn-sm glyphicon glyphicon-ok" ng-click="itemUpdate($index)"
+                   ng-show="hover" title="Update">
+                </a>
+                <a class="btn btn-danger btn-sm glyphicon glyphicon-trash" ng-click="itemDel($index)"
+                   ng-show="hover" title="Delete">
+                </a>
             </div>
         </div>
     </div>
@@ -144,7 +176,7 @@
 
 <div id="content" ng-view></div>
 <script>
-    var apiHost = "http://localhost:8000/";
+    var apiHost = "http://" + window.location.host + "/ppc/";
 </script>
 <script src="js/jquery-1.11.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

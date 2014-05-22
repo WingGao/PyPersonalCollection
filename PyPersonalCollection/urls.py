@@ -5,10 +5,7 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
                        url(r'^$', 'ppc.views.item.show'),
-                       url(r'^item/all', 'ppc.views.item.all'),
-                       url(r'^item/add', 'ppc.views.item.add'),
-                       url(r'^item/fetch', 'ppc.views.fetch.fetch'),
-                       url(r'^tag/all', 'ppc.views.tag.get_tags'),
+                       url(r'^ppc/', include('ppc.urls')),
                        # Examples:
                        # url(r'^$', 'PyPersonalCollection.views.home', name='home'),
                        # url(r'^blog/', include('blog.urls')),
