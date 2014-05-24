@@ -74,6 +74,8 @@ angular.module('myApp.controllers', [])
         $scope.save = function () {
             itemFac.create.save($scope.item, function (data) {
                 $location.path('/item/all');
+            }, function (error) {
+                $scope.error = "Save Failed!";
             });
 
         }
