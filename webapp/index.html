@@ -38,7 +38,8 @@
 
                 <div class="col-sm-6">
                     <label class="checkbox-inline" ng-repeat="s in searchs">
-                        <input type="checkbox" value="{{s.surl}}" class="input-search" checked="checked"> {{s.name}}
+                        <input type="checkbox" value="{{s.surl}}" class="input-search" ng-checked="s.def">
+                        {{s.name}}
                     </label>
 
                 </div>
