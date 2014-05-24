@@ -20,7 +20,7 @@ class CItem(models.Model):
     author = models.CharField(max_length=250, null=True)
     img = models.URLField()
     score = models.IntegerField()
-    url = models.URLField()
+    url = models.URLField(unique=True)
     tags = models.ManyToManyField(CTag)
     create_time = models.DateTimeField(auto_now_add=True)
     modify_time = models.DateTimeField(auto_now=True)

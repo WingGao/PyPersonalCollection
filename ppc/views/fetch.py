@@ -4,11 +4,12 @@ import json, urllib2, re
 
 
 class FetchItem():
+    title = ''
     author = ''
     img = ''
 
     def to_dict(self):
-        return {'author': self.author, 'img': self.img}
+        return {'title': self.title, 'author': self.author, 'img': self.img}
 
 
 def fetch(request):
@@ -26,8 +27,9 @@ def get_jbook(url):
     author = re.findall('<a class="prodauthor".*?>(.*?)</a>', html)[0]
     author = author.split("著")[0]
     author = author.decode('utf-8').replace(u'\u3000', ' ').strip()
-    img = re.findall('<img src="(.*?)" class="prodimage"', html)[0]
+    img, title = re.findall('<img src="(.*?)" class="prodimage" alt="(.*?)"', html)[0]
     f = FetchItem()
+    f.title = title
     f.author = author
     f.img = img
     return f

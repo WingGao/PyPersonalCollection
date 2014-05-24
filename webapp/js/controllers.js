@@ -48,11 +48,13 @@ angular.module('myApp.controllers', [])
             btn.disabled = true;
             btn.innerText = "Fetching...";
             $.getJSON(apiHost + 'item/fetch', {url: url}, function (data) {
-                btn.disabled = false;
-                btn.innerText = "Fetch";
+                $scope.item.title = data.title;
                 $scope.item.author = data.author;
                 $scope.item.img = data.img;
                 $scope.$apply();
+            }).always(function () {
+                btn.disabled = false;
+                btn.innerText = "Fetch";
             });
         }
 
