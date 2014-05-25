@@ -134,7 +134,7 @@
                 <a ng-href="{{item.url}}" target="_blank">link</a>
             </div>
             <div class="col-sm-2 item-list-text">
-                <select class="form-control input-sm item-list-text" ng-model="item.score">
+                <select class="form-control input-sm item-list-text" ng-model="item.score" ng-disabled="!edit">
                     <option value="0">Select</option>
                     <option value="10">(10) Masterpiece</option>
                     <option value="9">(9) Great</option>

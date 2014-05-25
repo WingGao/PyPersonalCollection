@@ -17,16 +17,18 @@ def all(request):
 def add(request):
     if request.method == 'POST':
         post = json.loads(request.body)
-        item = CItem()
-        item.title = post['title']
-        item.type = get_item_type(post['type'])
-        item.url = post['url']
-        item.img = post['img']
-        if 'author' in post:
-            item.author = post['author']
-        item.score = post.get('score', 0)
-        item.save()
-        item.tags = get_tags_by_id(post.get('tags', []))
+    elif request.method == 'GET':
+        post = request.GET
+    item = CItem()
+    item.title = post['title'].strip()
+    item.type = get_item_type(post['type'])
+    item.url = post['url'].strip()
+    item.img = post['img'].strip()
+    if 'author' in post:
+        item.author = post['author'].strip()
+    item.score = post.get('score', 0)
+    item.save()
+    item.tags = get_tags_by_id(post.get('tags', []))
     return HttpResponse(item)
 
 

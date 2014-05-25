@@ -10,7 +10,7 @@ class FetchItem():
     img = None
 
     def to_dict(self):
-        return {'title': self.title, 'author': self.author, 'img': self.img}
+        return {'title': self.title.strip(), 'author': self.author.strip(), 'img': self.img}
 
 
 def fetch(request):
@@ -18,9 +18,10 @@ def fetch(request):
     if not url.startswith('http'):
         url = "http://" + url
 
-    if url.index("www.jbook.co.jp"):
+    if "www.jbook.co.jp" in url:
         res = get_jbook(url)
-
+    # elif "myanimelist.net/anime/" in url:
+    #     res = get_mal(url, "anime")
     return HttpResponse(json.dumps(res.to_dict()))
 
 
