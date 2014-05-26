@@ -4,9 +4,9 @@
 
 angular.module('myApp.controllers', [])
     .controller('ItemAllCtrl', ['$scope', '$routeParams', 'item', 'tag', function ($scope, $routeParams, itemFac, tags) {
-        itemFac.all.query({}, function (data) {
+        $scope.sort = $routeParams.sort;
+        itemFac.all.query({sort: $routeParams.sort}, function (data) {
             $scope.items = data;
-
         });
         $scope.itemUpdate = function (index) {
             itemFac.update.save($scope.items[index], function (data) {

@@ -12,6 +12,6 @@ angular.module('myApp', [
 ]).
     config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/item/add/:type', {templateUrl: 'views/item_add.html', controller: 'ItemAddCtrl'});
-        $routeProvider.when('/item/all', {templateUrl: 'views/item_all.html', controller: 'ItemAllCtrl'});
-        $routeProvider.otherwise({redirectTo: '/item/all'});
+        $routeProvider.when('/item/all/:sort', {templateUrl: 'views/item_all.html', controller: 'ItemAllCtrl'});
+        $routeProvider.otherwise({redirectTo: '/item/all/newest'});
     }]);

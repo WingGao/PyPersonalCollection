@@ -11,6 +11,14 @@ def show(request):
 
 def all(request):
     items = CItem.objects.all()
+    if 'sort' in request.GET:
+        sort = request.GET['sort']
+        if sort == 'newest':
+            items = items.order_by('-id')
+        elif sort == 'oldest':
+            pass
+        elif sort == 'highest':
+            items = items.order_by('-score')
     return HttpResponse(json.dumps(objs_to_list(items)))
 
 

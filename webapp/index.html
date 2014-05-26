@@ -119,6 +119,21 @@
         <div id="item-list-head" class="row">
             <span class="col-sm-2">Count: {{items.length}}</span>
             <span class="col-sm-2">password: <code>ppc$all</code></span>
+
+            <div class="col-sm-2 dropdown">
+
+
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    Sort: {{sort}} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/item/all/newest">newest</a></li>
+                    <li><a href="#/item/all/oldest">oldest</a></li>
+                    <li><a href="#/item/all/highest">highest</a></li>
+                </ul>
+
+
+            </div>
         </div>
         <div ng-repeat="item in items" class="item-list-div row"
              ng-mouseenter="hover = true"
