@@ -19,6 +19,8 @@ def all(request):
             pass
         elif sort == 'highest':
             items = items.order_by('-score')
+        elif sort == 'lowest':
+            items = items.order_by('score')
     return HttpResponse(json.dumps(objs_to_list(items)))
 
 
