@@ -37,6 +37,16 @@ angular.module('myApp.controllers', [])
                 if (sort)s = sort;
                 $location.path('/item/all/' + t + "/" + s);
             }
+            function combineTags(tis) {
+                return tis.join(',');
+            }
+
+            $scope.searchByTags = function () {
+                itemFac.all.query({type: $routeParams.type, sort: $routeParams.sort, tags: combineTags($scope.stags)},
+                    function (data) {
+                        $scope.items = data;
+                    });
+            }
             $scope.checkTags = function (tags) {
                 for (var i = 0; i < $scope.stags.length; i++) {
                     if (tags.indexOf($scope.stags[i]) == -1)return false;

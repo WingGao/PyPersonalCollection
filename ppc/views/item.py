@@ -14,12 +14,19 @@ def all(request):
     if 'type' in request.GET:
         type = request.GET['type']
         if type == 'anime':
-            items = CItem.objects.filter(type=CItem.ANIME).all()
+            items = CItem.objects.filter(type=CItem.ANIME)
         elif type == 'manga':
-            items = CItem.objects.filter(type=CItem.MANGA).all()
+            items = CItem.objects.filter(type=CItem.MANGA)
 
     if items is None:
-        items = CItem.objects.all()
+        items = CItem.objects
+
+    if 'tags' in request.GET:
+        tags = request.GET['tags']
+        if len(tags) > 0:
+            items = items.filter(tags__in=tags.split(','))
+
+    items = items.all()
 
     if 'sort' in request.GET:
         sort = request.GET['sort']
