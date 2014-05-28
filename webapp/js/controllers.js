@@ -7,6 +7,7 @@ angular.module('myApp.controllers', [])
         function ($scope, $routeParams, $location, itemFac, tags) {
             $scope.sort = $routeParams.sort;
             $scope.type = $routeParams.type;
+            $scope.stags = [];
             itemFac.all.query({type: $routeParams.type, sort: $routeParams.sort}, function (data) {
                 $scope.items = data;
             });
@@ -35,6 +36,12 @@ angular.module('myApp.controllers', [])
                 if (type)t = type;
                 if (sort)s = sort;
                 $location.path('/item/all/' + t + "/" + s);
+            }
+            $scope.checkTags = function (tags) {
+                for (var i = 0; i < $scope.stags.length; i++) {
+                    if (tags.indexOf($scope.stags[i]) == -1)return false;
+                }
+                return true;
             }
         }])
     .controller('ItemAddCtrl', ['$scope', '$routeParams', '$location', 'item', 'tag', function ($scope, $routeParams, $location, itemFac, tags) {

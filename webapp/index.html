@@ -142,9 +142,13 @@
                 </ul>
             </div>
         </div>
+        <div class="row">
+            <div class="tags-list col-sm-11" value="stags"></div>
+            <!--<span class="btn btn-info col-sm-1" ng-click="navTag()">Apply</span>-->
+        </div>
         <div ng-repeat="item in items" class="item-list-div row"
              ng-mouseenter="hover = true"
-             ng-mouseleave="hover = false">
+             ng-mouseleave="hover = false" ng-show="checkTags(item.tags)">
             <img ng-src="{{item.img}}" class="item-list-cover col-sm-1">
 
             <div class="item-list-info col-sm-3">
