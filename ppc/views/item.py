@@ -10,7 +10,17 @@ def show(request):
 
 
 def all(request):
-    items = CItem.objects.all()
+    items = None
+    if 'type' in request.GET:
+        type = request.GET['type']
+        if type == 'anime':
+            items = CItem.objects.filter(type=CItem.ANIME).all()
+        elif type == 'manga':
+            items = CItem.objects.filter(type=CItem.MANGA).all()
+
+    if items is None:
+        items = CItem.objects.all()
+
     if 'sort' in request.GET:
         sort = request.GET['sort']
         if sort == 'newest':

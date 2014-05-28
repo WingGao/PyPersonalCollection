@@ -121,19 +121,25 @@
             <span class="col-sm-2">password: <code>ppc$all</code></span>
 
             <div class="col-sm-2 dropdown">
-
-
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    Type: {{type}} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a ng-click="nav('all')">all</a></li>
+                    <li><a ng-click="nav('anime')">anime</a></li>
+                    <li><a ng-click="nav('manga')">manga</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-2 dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                     Sort: {{sort}} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#/item/all/newest">newest</a></li>
-                    <li><a href="#/item/all/oldest">oldest</a></li>
-                    <li><a href="#/item/all/highest">highest</a></li>
-                    <li><a href="#/item/all/lowest">lowest</a></li>
+                    <li><a ng-click="nav(null,'newest')">newest</a></li>
+                    <li><a ng-click="nav(null,'oldest')">oldest</a></li>
+                    <li><a ng-click="nav(null,'highest')">highest</a></li>
+                    <li><a ng-click="nav(null,'lowest')">lowest</a></li>
                 </ul>
-
-
             </div>
         </div>
         <div ng-repeat="item in items" class="item-list-div row"

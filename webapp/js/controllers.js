@@ -3,30 +3,40 @@
 /* Controllers */
 
 angular.module('myApp.controllers', [])
-    .controller('ItemAllCtrl', ['$scope', '$routeParams', 'item', 'tag', function ($scope, $routeParams, itemFac, tags) {
-        $scope.sort = $routeParams.sort;
-        itemFac.all.query({sort: $routeParams.sort}, function (data) {
-            $scope.items = data;
-        });
-        $scope.itemUpdate = function (index) {
-            itemFac.update.save($scope.items[index], function (data) {
-                $scope.items[index] = data;
+    .controller('ItemAllCtrl', ['$scope', '$routeParams', '$location', 'item', 'tag',
+        function ($scope, $routeParams, $location, itemFac, tags) {
+            $scope.sort = $routeParams.sort;
+            $scope.type = $routeParams.type;
+            itemFac.all.query({type: $routeParams.type, sort: $routeParams.sort}, function (data) {
+                $scope.items = data;
             });
-        }
-        $scope.itemDel = function (index) {
-            var id = $scope.items[index].id;
-            itemFac.delete.get({id: id}, function (data) {
-                if (data.err_code == 0) {
-                    $scope.items.splice(index, 1);
-                    $scope.$apply();
-                }
-            });
-        }
+            $scope.itemUpdate = function (index) {
+                itemFac.update.save($scope.items[index], function (data) {
+                    $scope.items[index] = data;
+                });
+            }
+            $scope.itemDel = function (index) {
+                var id = $scope.items[index].id;
+                itemFac.delete.get({id: id}, function (data) {
+                    if (data.err_code == 0) {
+                        $scope.items.splice(index, 1);
+                        $scope.$apply();
+                    }
+                });
+            }
 
-        tags.all().then(function (ts) {
-            $scope.tags = ts;
-        });
-    }])
+            tags.all().then(function (ts) {
+                $scope.tags = ts;
+            });
+
+            $scope.nav = function (type, sort) {
+                var t = $routeParams.type;
+                var s = $routeParams.sort;
+                if (type)t = type;
+                if (sort)s = sort;
+                $location.path('/item/all/' + t + "/" + s);
+            }
+        }])
     .controller('ItemAddCtrl', ['$scope', '$routeParams', '$location', 'item', 'tag', function ($scope, $routeParams, $location, itemFac, tags) {
         var sites = {
             manga: [
