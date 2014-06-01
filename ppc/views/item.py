@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden,HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.core import serializers
 from ..models import *
@@ -56,6 +56,8 @@ def add(request):
     item.score = post.get('score', 0)
     item.save()
     item.tags = get_tags_by_id(post.get('tags', []))
+    if 'r' in post and str(post['r']) == '1':
+        return HttpResponseRedirect('/g/PyPersonalCollection/webapp/index.html')
     return HttpResponse(item)
 
 

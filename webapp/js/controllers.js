@@ -57,8 +57,9 @@ angular.module('myApp.controllers', [])
     .controller('ItemAddCtrl', ['$scope', '$routeParams', '$location', 'item', 'tag', function ($scope, $routeParams, $location, itemFac, tags) {
         var sites = {
             manga: [
-                {name: 'jbook', surl: 'https://www.google.com.hk/search?newwindow=1&q=%s+site%3Awww.jbook.co.jp', def: true},
-                {name: 'MyAnimeList', surl: 'https://www.google.com.hk/search?newwindow=1&q=%s+site%3Amyanimelist.net/manga', def: false}
+                {name: 'jbook', surl: 'https://www.google.co.jp/search?newwindow=1&q=%s+site%3Awww.jbook.co.jp', def: true},
+                {name: 'dmm', surl: 'https://www.google.co.jp/search?newwindow=1&q=%s+site%3Awww.dmm.co.jp%2Fdc%2Fbook%2F', def: false},
+                {name: 'MyAnimeList', surl: 'https://www.google.co.jp/search?newwindow=1&q=%s+site%3Amyanimelist.net/manga', def: false}
             ]
         };
         $scope.item = {type: $routeParams.type, tags: [], score: 0};

@@ -31,7 +31,7 @@ def get_jbook(url):
     html = opener.open(url).read()
     title = re.findall('<span class="prodtitlemain">(.*?)</span>', html)[0]
     author = re.findall('<a class="prodauthor".*?>(.*?)</a>', html)[0]
-    author = author.rstrip('著')
+    author = author.rstrip('著画')
     img = re.findall('<img src="(.*?)" class="prodimage"', html)
     f = FetchItem()
     f.title = strQ2B(title.decode('utf8'))

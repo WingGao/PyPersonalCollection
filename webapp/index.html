@@ -141,17 +141,21 @@
                     <li><a ng-click="nav(null,'lowest')">lowest</a></li>
                 </ul>
             </div>
+            <div class="col-sm-2">
+                <span class="glyphicon glyphicon-th view-type" ng-click="isTableView=true"></span>
+                <span class="glyphicon glyphicon-th-list view-type" ng-click="isTableView=false"></span>
+            </div>
         </div>
         <div class="row">
             <div class="tags-list col-sm-11" value="stags"></div>
             <span class="btn btn-info col-sm-1" ng-click="searchByTags()">Apply</span>
         </div>
-        <div ng-repeat="item in items" class="item-list-div row"
+        <div ng-repeat="item in items" ng-class="isTableView?'item-table-div':['item-list-div','row']"
              ng-mouseenter="hover = true"
              ng-mouseleave="hover = false">
-            <img ng-src="{{item.img}}" class="item-list-cover col-sm-1">
+            <img ng-src="{{item.img}}" class="item-list-cover" ng-class="isTableView?'':'col-sm-1'">
 
-            <div class="item-list-info col-sm-3">
+            <div class="item-list-info" ng-class="isTableView?'':'col-sm-3'">
                 <div class="item-list-title">{{item.title}}</div>
                 <div class="item-list-author">{{item.author}}</div>
             </div>
@@ -159,7 +163,7 @@
                 {{item.type}}_{{item.id}}<br>
                 <a ng-href="{{item.url}}" target="_blank">link</a>
             </div>
-            <div class="col-sm-2 item-list-text">
+            <div ng-class="isTableView?'':['col-sm-2','item-list-text']">
                 <select class="form-control input-sm item-list-text" ng-model="item.score" ng-disabled="!edit">
                     <option value="0">Select</option>
                     <option value="10">(10) Masterpiece</option>

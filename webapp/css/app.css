@@ -30,7 +30,7 @@
 }
 
 .item-list-cover {
-
+    max-height: 90px;
 }
 
 .item-list-title {
@@ -55,4 +55,25 @@
     border: 1px solid #ccc;
     padding: 3px;
     margin-right: 5px;
+}
+
+.view-type {
+    font-size: 20px;
+    width: 30px;
+    cursor: pointer;
+}
+
+.item-table-div {
+    float: left;
+    width: 120px;
+    height: 160px;
+    text-align: center;
+}
+
+.item-table-div .item-list-text, .item-table-div .item-list-type {
+    display: none;
+}
+
+.item-table-div .item-list-title {
+    font-size: 10px;
 }
