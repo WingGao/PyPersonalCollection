@@ -1,7 +1,7 @@
-#encoding:utf8
+# encoding:utf8
 from django.http import HttpResponse
 import json, urllib2, re
-from ppc.util import strQ2B
+from ppc.util import strQ2B, get_full_url
 
 
 class FetchItem():
@@ -14,9 +14,7 @@ class FetchItem():
 
 
 def fetch(request):
-    url = request.GET['url']
-    if not url.startswith('http'):
-        url = "http://" + url
+    url = get_full_url(request.GET['url'])
 
     if "www.jbook.co.jp" in url:
         res = get_jbook(url)

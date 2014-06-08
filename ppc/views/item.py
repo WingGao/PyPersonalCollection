@@ -1,7 +1,8 @@
-from django.http import HttpResponse, HttpResponseForbidden,HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.core import serializers
 from ..models import *
+from ..util import get_full_url
 import json
 
 
@@ -49,7 +50,7 @@ def add(request):
     item = CItem()
     item.title = post['title'].strip()
     item.type = get_item_type(post['type'])
-    item.url = post['url'].strip()
+    item.url = get_full_url(post['url'])
     item.img = post['img'].strip()
     if 'author' in post:
         item.author = post['author'].strip()
