@@ -1,0 +1,9 @@
+[uwsgi]
+socket = /run/uwsgi/app/django/socket
+chdir = /PyPersonalCollection
+#master = true
+module = PyPersonalCollection.wsgi
+wsgi-file = app.py
+uid = www-data
+gid = www-data
+vacuum = true

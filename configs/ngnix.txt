@@ -1,0 +1,18 @@
+upstream _django {
+    server unix:/run/uwsgi/app/django/socket;
+}
+
+server {
+    listen 80;
+    server_name localhost;
+    location / {
+        try_files $uri @uwsgi;
+    }
+    location /webapp {
+        root /PyPersonalCollection/webapp;
+    }
+    location @uwsgi {
+        include uwsgi_params;
+        uwsgi_pass _django;
+    }
+}
