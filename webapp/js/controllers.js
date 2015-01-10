@@ -7,15 +7,21 @@ angular.module('myApp.controllers', [])
         function ($scope, $routeParams, $location, itemFac, tags) {
             $scope.sort = $routeParams.sort;
             $scope.type = $routeParams.type;
+            $scope.nowPage = $routeParams.page;
             $scope.stags = [];
-            itemFac.all.query({type: $routeParams.type, sort: $routeParams.sort}, function (data) {
-                $scope.items = data;
+            itemFac.all.get({
+                type: $routeParams.type,
+                sort: $routeParams.sort,
+                page: $routeParams.page - 1
+            }, function (data) {
+                $scope.items = data.items;
+                $scope.maxPage = data.pages;
             });
             $scope.itemUpdate = function (index) {
                 itemFac.update.save($scope.items[index], function (data) {
                     $scope.items[index] = data;
                 });
-            }
+            };
             $scope.itemDel = function (index) {
                 var id = $scope.items[index].id;
                 itemFac.delete.get({id: id}, function (data) {
@@ -24,19 +30,21 @@ angular.module('myApp.controllers', [])
                         $scope.$apply();
                     }
                 });
-            }
+            };
 
             tags.all().then(function (ts) {
                 $scope.tags = ts;
             });
 
-            $scope.nav = function (type, sort) {
+            $scope.nav = function (type, sort, page) {
                 var t = $routeParams.type;
                 var s = $routeParams.sort;
+                var p = $routeParams.page;
                 if (type)t = type;
                 if (sort)s = sort;
-                $location.path('/item/all/' + t + "/" + s);
-            }
+                if (page)p = page;
+                $location.path('/item/all/' + t + "/" + s + "/" + p);
+            };
             function combineTags(tis) {
                 return tis.join(',');
             }
@@ -46,29 +54,41 @@ angular.module('myApp.controllers', [])
                     function (data) {
                         $scope.items = data;
                     });
-            }
+            };
             $scope.checkTags = function (tags) {
                 for (var i = 0; i < $scope.stags.length; i++) {
                     if (tags.indexOf($scope.stags[i]) == -1)return false;
                 }
                 return true;
-            }
+            };
         }])
     .controller('ItemAddCtrl', ['$scope', '$routeParams', '$location', 'item', 'tag', function ($scope, $routeParams, $location, itemFac, tags) {
         var sites = {
             manga: [
-                {name: 'jbook', surl: 'https://www.google.co.jp/search?newwindow=1&q=%s+site%3Awww.jbook.co.jp', def: true},
-                {name: 'dmm', surl: 'https://www.google.co.jp/search?newwindow=1&q=%s+site%3Awww.dmm.co.jp%2Fdc%2Fbook%2F', def: false},
-                {name: 'MyAnimeList', surl: 'https://www.google.co.jp/search?newwindow=1&q=%s+site%3Amyanimelist.net/manga', def: false}
+                {
+                    name: 'jbook',
+                    surl: 'https://www.google.co.jp/search?newwindow=1&q=%s+site%3Awww.jbook.co.jp',
+                    def: true
+                },
+                {
+                    name: 'dmm',
+                    surl: 'https://www.google.co.jp/search?newwindow=1&q=%s+site%3Awww.dmm.co.jp%2Fdc%2Fbook%2F',
+                    def: false
+                },
+                {
+                    name: 'MyAnimeList',
+                    surl: 'https://www.google.co.jp/search?newwindow=1&q=%s+site%3Amyanimelist.net/manga',
+                    def: false
+                }
             ]
         };
         $scope.item = {type: $routeParams.type, tags: [], score: 0};
-        $scope.searchs = sites[ $routeParams.type];
+        $scope.searchs = sites[$routeParams.type];
         $scope.search = function () {
             var csites = $('.input-search:checked');
             csites.each(function (index, item) {
                 if ($scope.item.title) var a = window.open(item.getAttribute('value').replace('%s', $scope.item.title), "",
-                        "top=0,left=" + index * 600 + ",width=600,height=800,location=yes,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no");
+                    "top=0,left=" + index * 600 + ",width=600,height=800,location=yes,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no");
             });
         }
         $scope.fetch = function (url) {

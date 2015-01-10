@@ -4,6 +4,9 @@ from django.core import serializers
 from ..models import *
 from ..util import get_full_url
 import json
+import math
+# num of items on one page
+ITEM_PAGE_NUM = 50
 
 
 def show(request):
@@ -41,7 +44,16 @@ def all(request):
             items = items.order_by('score')
         elif sort == 'name':
             items = items.order_by('title')
-    return HttpResponse(json.dumps(objs_to_list(items)))
+
+    try:
+        page = int(request.GET['page'])
+        if page < 0:
+            page = 0
+    except:
+        page = 0
+
+    return HttpResponse(json.dumps({'items': objs_to_list(items[page * ITEM_PAGE_NUM:(page + 1) * ITEM_PAGE_NUM]),
+                                    'pages': math.ceil(items.count() / ITEM_PAGE_NUM)}))
 
 
 def add(request):

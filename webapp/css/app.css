@@ -36,7 +36,7 @@
 .item-list-title {
     font-weight: bold;
     color: #6F0101;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .item-list-author {
@@ -76,4 +76,15 @@
 
 .item-table-div .item-list-title {
     font-size: 10px;
+}
+.pages {
+    margin-top: 20px;
+}
+.pages span {
+    width: 20px;
+    display: inline-block;
+    color: #428bca;
+}
+.pages .now {
+    color: #f5f5f5;
 }
