@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.core import serializers
+from django.contrib.auth.decorators import login_required
 from ..models import *
 from ..util import get_full_url
 import json
@@ -12,7 +12,7 @@ ITEM_PAGE_NUM = 50
 def show(request):
     return render_to_response('ppc.html')
 
-
+@login_required()
 def all(request):
     items = None
     if 'type' in request.GET:
@@ -55,7 +55,7 @@ def all(request):
     return HttpResponse(json.dumps({'items': objs_to_list(items[page * ITEM_PAGE_NUM:(page + 1) * ITEM_PAGE_NUM]),
                                     'pages': math.ceil(items.count() / ITEM_PAGE_NUM)}))
 
-
+@login_required()
 def add(request):
     if request.method == 'POST':
         post = json.loads(request.body)
@@ -75,7 +75,7 @@ def add(request):
         return HttpResponseRedirect('/g/PyPersonalCollection/webapp/index.html')
     return HttpResponse(item)
 
-
+@login_required()
 def delete(request):
     if 'id' in request.GET:
         item = CItem.objects.get(id=request.GET['id'])
@@ -83,7 +83,7 @@ def delete(request):
         return HttpResponse(json.dumps({'err_code': 0}))
     return HttpResponse(json.dumps({'err_code': 1}))
 
-
+@login_required()
 def update(request):
     if request.method == 'POST':
         post = json.loads(request.body)

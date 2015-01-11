@@ -128,6 +128,12 @@ angular.module('myApp.controllers', [])
 
         }
     }])
-    .controller('MyCtrl2', ['$scope', function ($scope) {
-
+    .controller('LoginCtrl', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+        $http.get('/user/check').success(function (res) {
+            if (res.is_login) {
+                $location.path('/item/all/all/newest/0')
+            } else {
+                window.location.href = '/user/login?next=/webapp'
+            }
+        })
     }]);

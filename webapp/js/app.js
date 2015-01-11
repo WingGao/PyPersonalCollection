@@ -12,6 +12,10 @@ angular.module('myApp', [
 ]).
     config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/item/add/:type', {templateUrl: 'views/item_add.html', controller: 'ItemAddCtrl'});
-        $routeProvider.when('/item/all/:type/:sort/:page', {templateUrl: 'views/item_all.html', controller: 'ItemAllCtrl'});
-        $routeProvider.otherwise({redirectTo: '/item/all/all/newest/0'});
+        $routeProvider.when('/item/all/:type/:sort/:page', {
+            templateUrl: 'views/item_all.html',
+            controller: 'ItemAllCtrl'
+        });
+        $routeProvider.when('/login', {template: 'CHECKING', controller: 'LoginCtrl'});
+        $routeProvider.otherwise({redirectTo: '/login'});
     }]);
