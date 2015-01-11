@@ -18,8 +18,11 @@ def fetch(request):
 
     if "www.jbook.co.jp" in url:
         res = get_jbook(url)
+    elif "www.dmm.co.jp" in url:
+        res = get_dmm(url)
+        return HttpResponse(res)
     # elif "myanimelist.net/anime/" in url:
-    #     res = get_mal(url, "anime")
+    # res = get_mal(url, "anime")
     return HttpResponse(json.dumps(res.to_dict()))
 
 
@@ -37,3 +40,8 @@ def get_jbook(url):
     if len(img) > 0:
         f.img = img[0]
     return f
+
+
+def get_dmm(url):
+    html = urllib2.urlopen(url).read()
+    return html

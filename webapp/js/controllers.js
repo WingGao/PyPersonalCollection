@@ -97,11 +97,18 @@ angular.module('myApp.controllers', [])
                 if ($scope.item.title) var a = window.open(item.getAttribute('value').replace('%s', $scope.item.title.trim()), "",
                     "top=0,left=" + index * 600 + ",width=600,height=800,location=yes,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no");
             });
-        }
+        };
+
         $scope.fetch = function (url) {
             var btn = $('#btn-add-fetch')[0];
             btn.disabled = true;
             btn.innerText = "Fetching...";
+
+            if ($routeParams.type == 'av' && url == undefined) {
+                $scope.item.url = 'http://www.dmm.co.jp/mono/dvd/-/detail/=/cid=%s/'.replace('%s', $scope.item.title.trim());
+                url = $scope.item.url;
+            }
+
             $.getJSON(apiHost + 'item/fetch', {url: url}, function (data) {
                 $scope.item.title = data.title;
                 $scope.item.author = data.author;
@@ -111,7 +118,7 @@ angular.module('myApp.controllers', [])
                 btn.disabled = false;
                 btn.innerText = "Fetch";
             });
-        }
+        };
 
         tags.all().then(function (ts) {
             $scope.tags = ts;
