@@ -83,3 +83,5 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 
 LOGIN_URL = '/user/login'
+
+SESSION_COOKIE_PATH = "/"
