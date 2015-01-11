@@ -80,6 +80,13 @@ angular.module('myApp.controllers', [])
                     surl: 'https://www.google.co.jp/search?newwindow=1&q=%s+site%3Amyanimelist.net/manga',
                     def: false
                 }
+            ],
+            av: [
+                {
+                    name: 'dmm',
+                    surl: 'http://www.dmm.co.jp/mono/dvd/-/detail/=/cid=%s/',
+                    def: true
+                }
             ]
         };
         $scope.item = {type: $routeParams.type, tags: [], score: 0};
@@ -87,7 +94,7 @@ angular.module('myApp.controllers', [])
         $scope.search = function () {
             var csites = $('.input-search:checked');
             csites.each(function (index, item) {
-                if ($scope.item.title) var a = window.open(item.getAttribute('value').replace('%s', $scope.item.title), "",
+                if ($scope.item.title) var a = window.open(item.getAttribute('value').replace('%s', $scope.item.title.trim()), "",
                     "top=0,left=" + index * 600 + ",width=600,height=800,location=yes,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no");
             });
         }
@@ -133,7 +140,7 @@ angular.module('myApp.controllers', [])
             if (res.is_login) {
                 $location.path('/item/all/all/newest/1')
             } else {
-                window.location.href = '/user/login?next=/webapp'
+                window.location.href = '/user/login?next=/webapp/index.html'
             }
         })
     }]);

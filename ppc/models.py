@@ -11,9 +11,11 @@ class CTag(models.Model):
 class CItem(models.Model):
     MANGA = 'MA'
     ANIME = 'AM'
+    AV = 'AV'
     TYPE_CHOICES = (
         (MANGA, 'manga'),
-        (ANIME, 'anime')
+        (ANIME, 'anime'),
+        (AV, 'av'),
     )
     type = models.CharField(max_length=2, choices=TYPE_CHOICES)
     title = models.CharField(max_length=250, db_index=True)
@@ -29,7 +31,6 @@ class CItem(models.Model):
         return {'id': self.id, 'title': self.title, 'author': self.author, 'img': self.img,
                 'score': self.score, 'url': self.url, 'tags': [i.id for i in self.tags.all()],
                 'type': self.get_type_display()}
-
 
 def get_item_type(tname):
     for i in CItem.TYPE_CHOICES:

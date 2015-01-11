@@ -12,15 +12,14 @@ ITEM_PAGE_NUM = 50
 def show(request):
     return render_to_response('ppc.html')
 
+
 @login_required()
 def all(request):
     items = None
-    if 'type' in request.GET:
-        type = request.GET['type']
-        if type == 'anime':
-            items = CItem.objects.filter(type=CItem.ANIME)
-        elif type == 'manga':
-            items = CItem.objects.filter(type=CItem.MANGA)
+    type = request.GET.get('type')
+    for i in CItem.TYPE_CHOICES:
+        if i[1] == type:
+            items = CItem.objects.filter(type=i[0])
 
     if items is None:
         items = CItem.objects
@@ -55,6 +54,7 @@ def all(request):
     return HttpResponse(json.dumps({'items': objs_to_list(items[page * ITEM_PAGE_NUM:(page + 1) * ITEM_PAGE_NUM]),
                                     'pages': math.ceil(items.count() / ITEM_PAGE_NUM)}))
 
+
 @login_required()
 def add(request):
     if request.method == 'POST':
@@ -72,8 +72,9 @@ def add(request):
     item.save()
     item.tags = get_tags_by_id(post.get('tags', []))
     if 'r' in post and str(post['r']) == '1':
-        return HttpResponseRedirect('/g/PyPersonalCollection/webapp/index.html')
+        return HttpResponseRedirect('/webapp/index.html')
     return HttpResponse(item)
+
 
 @login_required()
 def delete(request):
@@ -82,6 +83,7 @@ def delete(request):
         item.delete()
         return HttpResponse(json.dumps({'err_code': 0}))
     return HttpResponse(json.dumps({'err_code': 1}))
+
 
 @login_required()
 def update(request):
