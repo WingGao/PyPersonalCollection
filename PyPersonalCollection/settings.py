@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'wuser',
     'ppc',
+    'machine',
 )
 
 MIDDLEWARE_CLASSES = (
